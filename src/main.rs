@@ -45,6 +45,7 @@ fn sidecar() -> std::io::Result<()> {
 fn main() {
     let args: Vec<String> = std::env::args().skip(1).collect();
     match args.first().map(|s| s.as_str()) {
+        Some("manifest") => println!("{}", g::manifest()),
         Some("advise") | Some("model") | Some("status") => {
             let v = g::advise_command(&args, "");
             if let Some(t) = v["text"].as_str() {
