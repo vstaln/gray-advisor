@@ -24,7 +24,11 @@ fn sidecar() -> std::io::Result<()> {
             "command/run" => {
                 let argv: Vec<String> = req["params"]["argv"]
                     .as_array()
-                    .map(|a| a.iter().filter_map(|v| v.as_str().map(str::to_string)).collect())
+                    .map(|a| {
+                        a.iter()
+                            .filter_map(|v| v.as_str().map(str::to_string))
+                            .collect()
+                    })
                     .unwrap_or_default();
                 let sid = req["params"]["session"]["id"].as_str().unwrap_or("");
                 Ok(g::advise_command(&argv, sid))

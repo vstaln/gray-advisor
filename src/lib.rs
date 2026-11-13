@@ -117,7 +117,10 @@ pub fn session_digest(session_id: &str) -> String {
         }
         let text: String = text.chars().take(DIGEST_CHARS).collect();
         if !text.trim().is_empty() {
-            rows.push(format!("{role}: {}", text.split_whitespace().collect::<Vec<_>>().join(" ")));
+            rows.push(format!(
+                "{role}: {}",
+                text.split_whitespace().collect::<Vec<_>>().join(" ")
+            ));
         }
     }
     rows.iter()
@@ -253,6 +256,7 @@ pub fn manifest() -> Value {
         "sidecar_args": ["sidecar"],
         "tools": [],
         "commands": ["/advise"],
+        "command_descriptions": {"/advise": "ask a second model for its take on the problem"},
         "completion": ["model", "status"],
         "hooks": [],
     })
@@ -291,8 +295,14 @@ mod tests {
 
     #[test]
     fn unconfigured_advisor_errors() {
-        let e = ask_advisor(&Config { model: String::new(), bin: "gray".into() }, "q")
-            .unwrap_err();
+        let e = ask_advisor(
+            &Config {
+                model: String::new(),
+                bin: "gray".into(),
+            },
+            "q",
+        )
+        .unwrap_err();
         assert!(e.contains("no advisor model"));
     }
 
