@@ -255,6 +255,7 @@ pub fn manifest() -> Value {
         "protocol": PROTOCOL,
         "sidecar_args": ["sidecar"],
         "tools": [],
+        "description": "ask a second model for its take",
         "commands": ["/advise"],
         "command_descriptions": {"/advise": "ask a second model for its take on the problem"},
         "completion": ["model", "status"],
